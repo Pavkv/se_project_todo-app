@@ -14,4 +14,3 @@ constants.initialTodos.forEach((item) => {
 const todoModal = (new ToDoModal(constants.addTodoPopup, constants.addTodoSelectors)).getModal();
 const todoFormValidation = new FormValidator(constants.validationConfig, todoModal);
 todoFormValidation.enableValidation();
-todoFormValidation.resetValidation();

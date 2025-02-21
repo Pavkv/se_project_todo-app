@@ -44,15 +44,16 @@ export default class FormValidator {
         }
     };
 
-    disableButton = () => {
+    _disableButton = () => {
         const buttonElement = this._formElement.querySelector(this._settings.submitButtonSelector);
         buttonElement.disabled = true;
         buttonElement.classList.add(this._settings.inactiveButtonClass);
     }
 
-    resetValidation = () => {
+    _resetValidation = () => {
         const inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
         inputList.forEach((inputElement) => this._hideInputError(inputElement));
+        this._disableButton();
     };
 
     _setEventListeners = () => {
@@ -74,8 +75,12 @@ export default class FormValidator {
     };
 
     enableValidation = () => {
+        this._formElement.addEventListener("reset", () => {
+            this._resetValidation();
+        });
         this._formElement.addEventListener("submit", (evt) => {
             evt.preventDefault();
+            evt.target.reset();
         });
         this._setEventListeners();
     };
