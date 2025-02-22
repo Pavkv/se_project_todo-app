@@ -1,3 +1,6 @@
+import ToDo from "../components/Todo.js";
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
 export const initialTodos = [
     {
         id: "7cec7373-681b-49d9-b065-021d61a69d03",
@@ -29,6 +32,7 @@ export const validationConfig = {
 };
 
 export const todoSelectors = {
+    template: "#todo-template",
     name: ".todo__name",
     completed: ".todo__completed",
     label: ".todo__label",
@@ -41,6 +45,11 @@ export const addTodoPopup = document.querySelector("#add-todo-popup");
 export const addTodoSelectors = {
     popupOpen: ".button_action_add",
     popupForm: ".popup__form",
-    popupClose: ".popup__close",
-    popupList: ".todos__list"
+    popupClose: ".popup__close"
 };
+
+const todoList = document.querySelector(".todos__list");
+
+const generateTodo = (data) => { return (new ToDo(data, todoSelectors, uuidv4())).getView() };
+
+export const renderTodo = (item) => todoList.append(generateTodo(item));
