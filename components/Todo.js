@@ -8,9 +8,7 @@ export default class ToDo {
 
     _getTemplate = () => this._element = document.querySelector(this._selectors.template).content.cloneNode(true);
 
-    _setEventListeners = () => {
-        this._element.querySelector(this._selectors.deleteButton).addEventListener("click", () => this._element.remove());
-    };
+    _setEventListeners = () => this._element.querySelector(this._selectors.deleteButton).addEventListener("click", evt => evt.target.closest(".todo").remove());;
 
     _setDueDate = () => {
         if (!isNaN(this._dueDate)) {
