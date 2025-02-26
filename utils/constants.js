@@ -1,6 +1,3 @@
-import ToDo from "../components/Todo.js";
-import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-
 export const initialTodos = [
     {
         id: "7cec7373-681b-49d9-b065-021d61a69d03",
@@ -40,16 +37,6 @@ export const todoSelectors = {
     deleteButton: ".todo__delete-btn"
 };
 
-export const addTodoPopup = document.querySelector("#add-todo-popup");
-
-export const addTodoSelectors = {
-    popupOpen: ".button_action_add",
-    popupForm: ".popup__form",
-    popupClose: ".popup__close"
-};
-
-const todoList = document.querySelector(".todos__list");
-
-const generateTodo = (data) => { return (new ToDo(data, todoSelectors, uuidv4())).getView() };
-
-export const renderTodo = (item) => todoList.append(generateTodo(item));
+export const todoListSelector = ".todos__list";
+export const todoCounterSelector = ".counter__text";
+export const popupSelector = "#add-todo-popup";

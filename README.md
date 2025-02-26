@@ -41,8 +41,11 @@ The project follows a modular approach:
 │   │── todos.css
 │── components/ # JavaScript classes
 │   │── FormValidator.js # Form validation class
-│   │── Modal.js # Modal class for pop-up messages
+│   │── Popup.js # Popup dialog class
+│   │── PopupWithForm.js # Form popup dialog class
+│   │── Section.js # Section rendering class
 │   │── Todo.js # Task management class
+│   │── ToDoCounter.js # Task counter class
 │── images/ # Image assets
 │── pages/ # Main application components
 │   │── index.js
