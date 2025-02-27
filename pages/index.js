@@ -10,22 +10,26 @@ export const toDoCounter = new ToDoCounter(constants.initialTodos, constants.tod
 
 const todoList = new Section({
       items: constants.initialTodos,
-      renderer: (item) => new ToDo(item, constants.todoSelectors, uuidv4()).getView()
+      renderer: (item) => new ToDo(item, constants.todoSelectors, uuidv4(), toDoCounter).getView()
     },
     constants.todoListSelector);
 todoList.renderItems();
 
-const popupWithForm = new PopupWithForm(constants.popupSelector, {
-  submit: (popup, evt) => {
-    evt.preventDefault();
-    todoList.addItem(popup._getInputValues());
-    toDoCounter.updateTotal(true);
-    popup.close();
-  }
+const addTodoForm = new PopupWithForm(constants.popupSelector, {
+    submit: (popup, evt, inputs) => {
+        evt.preventDefault();
+        const date = new Date(inputs[1]);
+        todoList.addItem({
+            name: inputs[0],
+            date: date.setMinutes(date.getMinutes() + date.getTimezoneOffset())
+        });
+        toDoCounter.updateTotal(true);
+        popup.togglePopup(false);
+    }
 });
-popupWithForm.setEventListeners();
+addTodoForm.setEventListeners();
 
-document.querySelector(".button_action_add").addEventListener("click", popupWithForm.open);
+document.querySelector(".button_action_add").addEventListener("click", () => addTodoForm.togglePopup());
 
-const todoFormValidation = new FormValidator(constants.validationConfig, popupWithForm.getPopupForm());
+const todoFormValidation = new FormValidator(constants.validationConfig, addTodoForm.getPopupForm());
 todoFormValidation.enableValidation();

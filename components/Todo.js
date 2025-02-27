@@ -1,23 +1,25 @@
-import {toDoCounter} from "../pages/index.js";
-
 export default class ToDo {
-    constructor(data, selectors, id) {
+    constructor(data, selectors, id, toDoCounter) {
         this._data = {...data, completed: data.completed ?? false};
         this._selectors = selectors;
         this._dueDate = new Date(data.date);
         this._id = `todo-${id}`;
         this._element = document.querySelector(this._selectors.template).content.cloneNode(true);
         this._checkElement = this._element.querySelector(this._selectors.completed);
+        this._toDoCounter = toDoCounter;
     }
 
     _setEventListeners = () => {
         this._element.querySelector(this._selectors.deleteButton)
         .addEventListener("click", evt => {
+            if (this._checkElement.checked) {
+                this._toDoCounter.updateCompleted(false);
+            }
+            this._toDoCounter.updateTotal(false);
             evt.target.closest(".todo").remove();
-            toDoCounter.updateTotal(false);
         });
         this._checkElement.addEventListener("click",
-            () => toDoCounter.updateCompleted(!!this._checkElement.checked));
+            () => this._toDoCounter.updateCompleted(!!this._checkElement.checked));
         };
 
     _setDueDate = () => {
